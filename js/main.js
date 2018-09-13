@@ -4,6 +4,9 @@ var amountOfFFs = 0;
 var started = false;
 var timeLoop;
 var average = 0;
+var timeToRecordFFTime = 0;
+var fastestFFTypeSpeed = 20;
+var typingTimingLoop;
 
 var buttonNewTime10;
 var buttonNewTime30;
@@ -19,11 +22,16 @@ var highestPerSecondLabel;
 var resetHighScoreButton;
 var highestPerSecond;
 
+var currentFFTypeSpeedLabel;
+var highestFFTypeSpeedLabel;
+
+
 function ResetVariables(){
     time = initialTime;
     amountOfFFs = 0;
     started = false;
     average = 0;
+    timeToRecordFFTime = 0;
 
     timeLabel.innerHTML = time;
     ffLabel.innerHTML = 0;
@@ -43,6 +51,8 @@ function GiveNewTime(button, newTime){
     ResetVariables();
     clearInterval(timeLoop);
     GetHighscore();
+    clearInterval(typingTimingLoop);
+    typingTimingLoop = null;
 }
 
 function GetHighscore(){
@@ -89,6 +99,8 @@ $(document).ready(function(){
     ffPerSecondLabel = document.getElementById('ffPerSecond');
     highestPerSecondLabel = document.getElementById('highestPerSecond');
     resetHighScoreButton = document.getElementById('resetHighScoreButton');
+    currentFFTypeSpeedLabel = document.getElementById('currentFFTypeSpeed');
+    highestFFTypeSpeedLabel = document.getElementById('highestFFTypeSpeed');
 
     buttonNewTime10 = document.getElementById('btnTime10');
     buttonNewTime10.addEventListener("click", function() {GiveNewTime(this, 1000);});
@@ -144,15 +156,33 @@ $(document).ready(function(){
                             if (Math.random() > 0.6)
                                 RandomRage();
                             ffLabel.innerHTML = amountOfFFs; 
-                        } 
+                        }
                     }
+                    clearInterval(typingTimingLoop);
+                    typingTimingLoop = null;
+                    var current = timeToRecordFFTime / 100;
+                    if (current < fastestFFTypeSpeed){
+                        fastestFFTypeSpeed = current;
+                        highestFFTypeSpeedLabel.innerHTML = fastestFFTypeSpeed;
+                    }
+                    currentFFTypeSpeedLabel.innerHTML = current;
+                    timeToRecordFFTime = 0;
                 }
                 chatBox.value = "";
-            } 
+            } else {
+                if (!typingTimingLoop){
+                    typingTimingLoop = setInterval(FFTypeTime, 10);
+                } 
+            }
             chatBox.style.visibility = (chatBox.style.visibility == "hidden") ? "visible" : "hidden";
             chatBox.focus();
         }
     });
+
+    
+    function FFTypeTime(){
+        timeToRecordFFTime += 1;
+    }
 
     function AverageCalc() {
         if (initialTime > 0){
