@@ -204,7 +204,7 @@ $(document).ready(function(){
         $.toast({
             text: rageQuotes[Math.floor(Math.random()*rageQuotes.length)], // Text that is to be shown in the toast
             allowToastClose: false,
-            position: 'mid-center',
+            position: 'bottom-center',
             stack: false,
             bgColor: '#373737',
             textColor: 'white',
