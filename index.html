@@ -6,37 +6,84 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Tilt Checker</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="jquery-3.3.1.min.js"></script>
-    <script src="main.js"></script>
+    <script src="./js/jquery-3.3.1.min.js"></script>
+    <script src="./js/main.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/jquery.toast.css"/>
+    <script src="./js/jquery.toast.js"> </script>
 </head>
 
 <body>
+    <style>
+    .row-overflow {
+        border-top: 1px solid grey;
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }    
+    </style>
+
     <div class="container h-100 d-flex justify-content-center">
         <div class="page-header">
             <h1>How Tilted Are You?</h1>
         </div>
     </div>
 
-    <div class="container h-100 d-flex justify-content-center">
-        <div id="form">
-            <p class="label" id="time"> <b>Time:</b> </p>
-            <p class="label" id="ff"> <b> FFs: </b> </p>
-            <p class="label" id="ffPerSecond"> <b> FFs per second: </b> </p>
-            <p class="label" id="highestPerSecond"> <b> Highest FFs per second: </b></p>
-            <button id="resetButton">Reset</button>
-            <input type="text" id="typingBox" />
+    <div class="container h-100 justify-content-center">
+        <div>
+            <div class="row row-overflow">
+                <p class="col-8"> <b>Time:</b></p>
+                <p class="col-4" id="time" style="text-align: right">3000</p>
+            </div>
+                
+            <div class="row row-overflow">
+                <p class="col-8"> <b>FF Count:</b></p>
+                <p class="col-4" id="ffCount" style="text-align: right">0</p>
+            </div>
+                
+            <div class="row row-overflow">
+                <p class="col-8"> <b>FFs Per Second:</b></p>
+                <p class="col-4" id="ffPerSecond" style="text-align: right">0</p>
+            </div>
+
+            <div class="row row-overflow">
+                    <p class="col-8"> <b>Highscore FFPS:</b></p>
+                    <p class="col-4" id="highestPerSecond" style="text-align: right">0</p>
+            </div>
+
+            <div class="row" style="border-top: 1px solid grey">
+                <input class="form-control" type="text" id="typingBox" />  
+            </div>
+
+
         </div>
     </div>
 
-    <div class="container h-100 d-flex justify-content-center">
-        <div id="bottom" style="text-align: center">
-            <p> <i> Press Enter to bring up the chat box, type /ff and press enter again. </i></p>
-            <p> <i> The first /ff will start the timer!</i></p></po>
-            <button id="resetHighScoreButton">Reset High Score</button>
+    <div id="bottom" style="text-align: center">
+            <p class="text-primary"> <i> Press Enter to bring up the chat box, type /ff and press enter again. </i> </p>
+            <p class="text-primary"> <i> The first /ff will start the timer!</i></p>
+        </div>
+
+    <div class="container">
+        <div class="row" style="text-align: center">
+
+        </div>
+
+        <div class="row justify-content-center" style="height: 50px">
+            <button id="resetButton" class="btn btn-outline-secondary btn-md" style="margin-right: 5px">Reset Time</button>
+            <button id="resetHighScoreButton" type="button" class="btn btn-outline-secondary btn-md">Reset High Score</button>
+        </div>
+    </div>
+
+    <div class="container h-100 d-flex justify-content-center" style="padding-top: 20px">
+        <div id="row">
+            <button id="btnTime10" type="button" class="btn btn-outline-secondary">10s</button>
+            <button id="btnTime30" type="button" class="btn btn-outline-secondary" disabled>30s</button>
+            <button id="btnTime60" type="button" class="btn btn-outline-secondary">60s</button>
+            <button id="btnTimeInfinite" type="button" class="btn btn-outline-secondary" title="This button will give you an unlimited time!">∞</button>
         </div>
     </div>
 </body>
