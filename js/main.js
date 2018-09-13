@@ -139,10 +139,12 @@ $(document).ready(function(){
                             ffLabel.innerHTML = amountOfFFs; 
                         }                      
                     } else {
-                        amountOfFFs += 1;
-                        if (Math.random() > 0.6)
-                            RandomRage();
-                        ffLabel.innerHTML = amountOfFFs; 
+                        if (time > 0) {
+                            amountOfFFs += 1;
+                            if (Math.random() > 0.6)
+                                RandomRage();
+                            ffLabel.innerHTML = amountOfFFs; 
+                        } 
                     }
                 }
                 chatBox.value = "";
@@ -162,8 +164,8 @@ $(document).ready(function(){
         if (average > highestPerSecond) {
             highestPerSecond = average;
             localStorage.setItem("highScore"+initialTime, highestPerSecond);
-            if (resetHighScoreButton.style.visibility == "hidden")
-                resetHighScoreButton.style.visibility = "visible";
+            if (resetHighScoreButton.disabled == true)
+                resetHighScoreButton.disabled = false;
             highestPerSecondLabel.innerHTML = highestPerSecond.toFixed(4);
         }
     }
