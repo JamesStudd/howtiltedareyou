@@ -49,10 +49,13 @@ function GetHighscore(){
     highestPerSecond = parseFloat(localStorage.getItem('highScore'+initialTime)).toFixed(2) || 0;
     if (isNaN(highestPerSecond)){
         highestPerSecond = 0;
-        resetHighScoreButton.style.visibility = "hidden";
+        resetHighScoreButton.disabled = true;
     } else {
         highestPerSecond = parseFloat(highestPerSecond);
-        resetHighScoreButton.style.visibility = "visible";
+        if (highestPerSecond > 0)
+            resetHighScoreButton.disabled = false;
+        else
+            resetHighScoreButton.disabled = true;
     }
     highestPerSecondLabel.innerHTML = highestPerSecond.toFixed(2);
 }
@@ -103,7 +106,7 @@ $(document).ready(function(){
     buttonNewTimeInfinite.addEventListener('click', function() {GiveNewTime(this, 0);});
     buttons.push(buttonNewTimeInfinite);
 
-    resetHighScoreButton.style.visibility = "hidden";
+    resetHighScoreButton.disabled = true;
     GetHighscore();
 
     function TimerChange() {
@@ -114,6 +117,8 @@ $(document).ready(function(){
             } else {
                 AverageCalc();
                 clearInterval(timeLoop);
+                if (amountOfFFs > 0)
+                    resetHighScoreButton.disabled = false;
             }
         } else {
             time += 1;
@@ -185,6 +190,7 @@ $(document).ready(function(){
         highestPerSecond = 0;
         localStorage.setItem('highScore'+initialTime, 0);
         highestPerSecondLabel.innerHTML = 0;
+        resetHighScoreButton.disabled = true;
     });
 });
 
