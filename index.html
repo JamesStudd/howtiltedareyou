@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tilt Checker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container h-100 d-flex justify-content-center">
+        <div class="page-header">
+            <h1>How Tilted Are You?</h1>
+        </div>
+    </div>
+
+    <div class="container h-100 d-flex justify-content-center">
+        <div id="form">
+            <p class="label" id="time"> <b>Time:</b> </p>
+            <p class="label" id="ff"> <b> FFs: </b> </p>
+            <p class="label" id="ffPerSecond"> <b> FFs per second: </b> </p>
+            <p class="label" id="highestPerSecond"> <b> Highest FFs per second: </b></p>
+            <button id="resetButton">Reset</button>
+            <input type="text" id="typingBox" />
+        </div>
+    </div>
+
+    <div class="container h-100 d-flex justify-content-center">
+        <div id="bottom" style="text-align: center">
+            <p> <i> Press Enter to bring up the chat box, type /ff and press enter again. </i></p>
+            <p> <i> The first /ff will start the timer!</i></p></po>
+            <button id="resetHighScoreButton">Reset High Score</button>
+        </div>
+    </div>
+</body>
+
+</html>
