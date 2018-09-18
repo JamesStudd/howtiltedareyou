@@ -88,7 +88,18 @@ $(document).ready(function(){
         "hardstuck Diamond",
         "riven 1 trick, can't jungle",
         "lol autofilled jungle",
-        "if i die again im afk btw"
+        "if i die again im afk btw",
+        "im done",
+        "?",
+        "open mid",
+        "An ally has been slain",
+        "I lost lane now i take jung",
+        "ggez",
+        "ur useless",
+        "im getting camped do something",
+        "its just a game lol",
+        "idc",
+        "Jungle difference XD"
     ];
 
     chatBox = document.getElementById('typingBox');
