@@ -7,6 +7,8 @@ var average = 0;
 var timeToRecordFFTime = 0;
 var fastestFFTypeSpeed = 20;
 var typingTimingLoop;
+var tiltAmount = 0;
+var canRestart = false;
 
 var buttonNewTime10;
 var buttonNewTime30;
@@ -21,6 +23,8 @@ var ffPerSecondLabel;
 var highestPerSecondLabel;
 var resetHighScoreButton;
 var highestPerSecond;
+var tiltScoreLabel;
+var tiltStringLabel;
 
 var currentFFTypeSpeedLabel;
 var highestFFTypeSpeedLabel;
@@ -31,11 +35,11 @@ function ResetVariables(){
     amountOfFFs = 0;
     started = false;
     average = 0;
-    timeToRecordFFTime = 0;
 
     timeLabel.innerHTML = time;
     ffLabel.innerHTML = 0;
     ffPerSecondLabel.innerHTML = 0;
+    fastestFFTypeSpeed = 20;
 }
 
 function GiveNewTime(button, newTime){
@@ -102,7 +106,28 @@ $(document).ready(function(){
         "Jungle difference XD"
     ];
 
+    var tiltValues = [
+        5,
+        10,
+        20,
+        30,
+        40,
+        50
+    ];
+
+    var tiltStrings = [
+        "not at all",
+        "a tiny bit",
+        "a little",
+        "quite",
+        "very",
+        "extremely"
+    ];
+
     chatBox = document.getElementById('typingBox');
+    chatBox.onpaste = function(e) {
+        e.preventDefault();
+    }
     chatBox.style.visibility = "hidden";
 
     timeLabel = document.getElementById('time');
@@ -112,6 +137,8 @@ $(document).ready(function(){
     resetHighScoreButton = document.getElementById('resetHighScoreButton');
     currentFFTypeSpeedLabel = document.getElementById('currentFFTypeSpeed');
     highestFFTypeSpeedLabel = document.getElementById('highestFFTypeSpeed');
+    tiltScoreLabel = document.getElementById('tiltScore');
+    tiltStringLabel = document.getElementById('tiltString');
 
     buttonNewTime10 = document.getElementById('btnTime10');
     buttonNewTime10.addEventListener("click", function() {GiveNewTime(this, 1000);});
@@ -166,7 +193,11 @@ $(document).ready(function(){
                             amountOfFFs += 1;
                             if (Math.random() > 0.6)
                                 RandomRage();
-                            ffLabel.innerHTML = amountOfFFs; 
+                            ffLabel.innerHTML = amountOfFFs;
+                            if (canRestart)
+                                canRestart = false;
+                        } else if (time <= 0 && initialTime > 0 && canRestart){
+                            ResetGo();
                         }
                     }
                     clearInterval(typingTimingLoop);
@@ -198,6 +229,7 @@ $(document).ready(function(){
     function AverageCalc() {
         if (initialTime > 0){
             average = amountOfFFs / (initialTime / 100);
+            setTimeout(function(){canRestart = true;}, 1000);
         } else {
             average = amountOfFFs / (time / 100);
         }
@@ -209,11 +241,26 @@ $(document).ready(function(){
                 resetHighScoreButton.disabled = false;
             highestPerSecondLabel.innerHTML = highestPerSecond.toFixed(4);
         }
+        TiltScoreCalc();
+    }
+
+    function TiltScoreCalc(){
+        tiltAmount = ((average / fastestFFTypeSpeed) * 10).toFixed(2);
+        tiltScoreLabel.innerHTML = tiltAmount;
+        for (let index = 0; index < tiltValues.length; index++) {
+            const element = tiltValues[index];
+            if (tiltAmount < element){
+                tiltStringLabel.innerHTML = "You are " + tiltStrings[index == 0 ? index : index - 1] + " tilted.";
+                return;
+            } 
+            if (index == tiltValues.length - 1)
+                tiltStringLabel.innerHTML = "You are " + tiltStrings[tiltStrings.length - 1] + " tilted.";
+        }
     }
 
     function RandomRage(){
         $.toast({
-            text: rageQuotes[Math.floor(Math.random()*rageQuotes.length)], // Text that is to be shown in the toast
+            text: rageQuotes[Math.floor(Math.random()*rageQuotes.length)],
             allowToastClose: false,
             position: 'bottom-center',
             stack: false,
@@ -225,9 +272,20 @@ $(document).ready(function(){
     }
 
     document.getElementById('resetButton').addEventListener("click", function() {
-        ResetVariables();  
+        ResetVariables();
         clearInterval(timeLoop);
     });
+
+    function ResetGo(){
+        ResetVariables();  
+        clearInterval(timeLoop);
+        timeLoop = setInterval(TimerChange, 10);
+        started = true;
+        if (initialTime > 0) {
+            amountOfFFs += 1;
+            ffLabel.innerHTML = amountOfFFs;
+        }                   
+    }
 
     resetHighScoreButton.addEventListener("click", function () {
         highestPerSecond = 0;
